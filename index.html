@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRIME SOCIALS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Orbitron:wght@500;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --mui-blue: #00d2ff;
+            --mui-silver: #ffffff;
+            --mui-glow: rgba(0, 210, 255, 0.5);
+            --bg-image: url('https://wallpapercave.com/wp/wp3982424.jpg');
+        }
+
+        * { box-sizing: border-box; cursor: crosshair; }
+
+        body {
+            margin: 0; padding: 0;
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh;
+            background: #000 var(--bg-image) no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Orbitron', sans-serif;
+            color: white;
+        }
+
+        #loginCard, #storePage {
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--mui-blue);
+            padding: 40px; width: 480px; text-align: center;
+            box-shadow: 0 0 30px var(--mui-glow);
+        }
+
+        #storePage { display: none; animation: fadeIn 0.5s ease-in; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+
+        h1 {
+            font-family: 'Bangers'; font-size: 3.5rem; margin: 0 0 10px;
+            background: linear-gradient(#fff, #999);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        .promo-banner {
+            background: #ff0055; font-size: 0.8rem; padding: 10px; margin-bottom: 15px;
+            font-weight: bold; border: 1px solid white; text-transform: uppercase;
+        }
+
+        .form-group { margin-bottom: 20px; text-align: left; transition: 0.3s; }
+        label { font-size: 0.75rem; color: var(--mui-blue); letter-spacing: 2px; text-transform: uppercase; }
+
+        select, input {
+            width: 100%; padding: 14px; background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(0, 210, 255, 0.4); color: white;
+            font-family: 'Orbitron'; outline: none; margin-top: 8px;
+        }
+
+        .price-box {
+            background: rgba(255, 255, 255, 0.05); border-left: 5px solid #00ff88;
+            padding: 15px; margin: 20px 0; text-align: center;
+        }
+
+        .price-box span { font-family: 'Bangers'; font-size: 3rem; color: #00ff88; }
+
+        .mastered-btn {
+            width: 100%; padding: 18px; background: transparent;
+            border: 2px solid var(--mui-silver); color: white;
+            font-family: 'Bangers'; font-size: 2rem; cursor: pointer; transition: 0.4s;
+        }
+
+        .mastered-btn:hover { background: white; color: black; box-shadow: 0 0 40px white; }
+
+        .shaking { animation: shake 0.1s infinite; }
+        @keyframes shake { 0% {transform: translate(2px, 2px);} 100% {transform: translate(-2px, -2px);} }
+    </style>
+</head>
+<body>
+
+    <div id="loginCard">
+        <h1>PRIME SOCIALS</h1>
+        <form onsubmit="event.preventDefault(); triggerMastery();">
+            <input type="email" placeholder="EMAIL ADDRESS" required>
+            <button type="submit" class="mastered-btn" style="margin-top:20px;">ACCESS STORE</button>
+        </form>
+    </div>
+
+    <div id="storePage">
+        <p style="color:#00ff88; font-size: 0.8rem; margin-bottom: 10px;">EASYPAISA: 03158122426</p>
+        
+        <div class="form-group">
+            <label>1. Select Category</label>
+            <select id="platform" onchange="updateServices()">
+                <option value="tiktok_acc">TIKTOK ACCOUNTS (600 RS)</option>
+                <option value="tiktok">TIKTOK SERVICES</option>
+                <option value="instagram">INSTAGRAM SERVICES</option>
+                <option value="youtube">YOUTUBE SERVICES</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>2. Select Service</label>
+            <select id="service" onchange="toggleCountryField()"></select>
+        </div>
+
+        <div id="countrySection" class="form-group" style="display:none;">
+            <label>3. Type Country Name</label>
+            <input type="text" id="countryName" placeholder="e.g. Canada, Germany, Brazil...">
+        </div>
+
+        <div id="qtySection" class="form-group">
+            <label>3. Quantity</label>
+            <input type="number" id="qty" value="1000" oninput="calculatePrice()">
+        </div>
+
+        <div class="price-box">
+            <small style="color:#00ff88; display:block;">PAYABLE AMOUNT</small>
+            <span id="totalPrice">600</span> <small style="display:inline; font-size: 1.2rem;">RS</small>
+        </div>
+
+        <div class="form-group">
+            <label id="linkLabel">Target Link / Your Name</label>
+            <input type="text" id="link" placeholder="Enter link or name...">
+        </div>
+
+        <button class="mastered-btn" onclick="sendToWhatsApp()">ORDER NOW</button>
+    </div>
+
+    <script>
+        const pricing = {
+            tiktok_acc: { "TikTok UK Account": 600, "TikTok Global Account": 600 },
+            tiktok: { "Followers": 1.2, "Likes": 0.07, "Views": 0.058 },
+            instagram: { "Followers": 1.25, "Likes": 0.15, "Views": 0.07 },
+            youtube: { "Likes": 0.1, "Views": 0.3 }
+        };
+
+        function updateServices() {
+            const p = document.getElementById('platform').value;
+            const s = document.getElementById('service');
+            s.innerHTML = "";
+            Object.keys(pricing[p]).forEach(srv => {
+                let opt = document.createElement("option");
+                opt.value = srv; opt.innerText = srv;
+                s.add(opt);
+            });
+            toggleCountryField();
+        }
+
+        function toggleCountryField() {
+            const s = document.getElementById('service').value;
+            const p = document.getElementById('platform').value;
+            const countrySec = document.getElementById('countrySection');
+            const qtySec = document.getElementById('qtySection');
+            const qtyInput = document.getElementById('qty');
+
+            if (s === "TikTok Global Account") {
+                countrySec.style.display = "block";
+            } else {
+                countrySec.style.display = "none";
+            }
+
+            if(p === 'tiktok_acc') {
+                qtyInput.value = 1;
+                qtySec.style.display = "none";
+            } else {
+                qtySec.style.display = "block";
+                if(qtyInput.value == 1) qtyInput.value = 1000;
+            }
+            calculatePrice();
+        }
+
+        function calculatePrice() {
+            const p = document.getElementById('platform').value;
+            const s = document.getElementById('service').value;
+            const q = document.getElementById('qty').value || 0;
+            const total = Math.ceil(q * pricing[p][s]);
+            document.getElementById('totalPrice').innerText = total;
+        }
+
+        function triggerMastery() {
+            document.body.classList.add('shaking');
+            setTimeout(() => {
+                document.body.style.background = "white"; 
+                setTimeout(() => {
+                    document.body.classList.remove('shaking');
+                    document.getElementById('loginCard').style.display = 'none';
+                    document.getElementById('storePage').style.display = 'block';
+                    document.body.style.background = "black var(--bg-image) no-repeat center center fixed";
+                    document.body.style.backgroundSize = "cover";
+                    updateServices();
+                }, 400);
+            }, 800);
+        }
+
+        function sendToWhatsApp() {
+            const phone = "923158122426";
+            const s = document.getElementById('service').value;
+            const q = document.getElementById('qty').value;
+            const t = document.getElementById('totalPrice').innerText;
+            const l = document.getElementById('link').value;
+            const c = document.getElementById('countryName').value;
+
+            if(!l) { alert("Please enter your name or link!"); return; }
+
+            let msg = `*NEW PRIME ORDER*%0A------------------%0A*Service:* ${s}`;
+            if(s === "TikTok Global Account") msg += `%0A*Requested Country:* ${c}`;
+            msg += `%0A*Qty/Count:* ${q}%0A*Total:* ${t} RS%0A*Target:* ${l}%0A------------------%0A_Payment via Easypaisa_`;
+            
+            window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
+        }
+    </script>
+</body>
+</html>
