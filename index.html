@@ -10,6 +10,7 @@
             --mui-blue: #00d2ff;
             --mui-silver: #ffffff;
             --mui-glow: rgba(0, 210, 255, 0.5);
+            /* Aap apni image yahan change kar sakte hain */
             --bg-image: url('https://wallpapercave.com/wp/wp3982424.jpg');
         }
 
@@ -23,49 +24,52 @@
             background-size: cover;
             font-family: 'Orbitron', sans-serif;
             color: white;
+            overflow-x: hidden;
         }
 
         #loginCard, #storePage {
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(20px);
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(15px);
             border: 2px solid var(--mui-blue);
-            padding: 40px; width: 480px; text-align: center;
+            padding: 30px; width: 90%; max-width: 450px; text-align: center;
             box-shadow: 0 0 30px var(--mui-glow);
+            border-radius: 15px;
         }
 
         #storePage { display: none; animation: fadeIn 0.5s ease-in; }
 
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         h1 {
-            font-family: 'Bangers'; font-size: 3.5rem; margin: 0 0 10px;
-            background: linear-gradient(#fff, #999);
+            font-family: 'Bangers'; font-size: 3rem; margin: 0 0 10px;
+            background: linear-gradient(#fff, #00d2ff);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
 
-        .form-group { margin-bottom: 20px; text-align: left; transition: 0.3s; }
-        label { font-size: 0.75rem; color: var(--mui-blue); letter-spacing: 2px; text-transform: uppercase; }
+        .form-group { margin-bottom: 15px; text-align: left; }
+        label { font-size: 0.7rem; color: var(--mui-blue); letter-spacing: 1.5px; text-transform: uppercase; font-weight: bold; }
 
         select, input {
-            width: 100%; padding: 14px; background: rgba(255,255,255,0.05);
+            width: 100%; padding: 12px; background: rgba(255,255,255,0.1);
             border: 1px solid rgba(0, 210, 255, 0.4); color: white;
-            font-family: 'Orbitron'; outline: none; margin-top: 8px;
+            font-family: 'Orbitron'; outline: none; margin-top: 5px; border-radius: 5px;
         }
 
         .price-box {
-            background: rgba(255, 255, 255, 0.05); border-left: 5px solid #00ff88;
-            padding: 15px; margin: 20px 0; text-align: center;
+            background: rgba(0, 255, 136, 0.1); border: 1px dashed #00ff88;
+            padding: 10px; margin: 20px 0; border-radius: 10px;
         }
 
-        .price-box span { font-family: 'Bangers'; font-size: 3rem; color: #00ff88; }
+        .price-box span { font-family: 'Bangers'; font-size: 2.5rem; color: #00ff88; }
 
         .mastered-btn {
-            width: 100%; padding: 18px; background: transparent;
-            border: 2px solid var(--mui-silver); color: white;
-            font-family: 'Bangers'; font-size: 2rem; cursor: pointer; transition: 0.4s;
+            width: 100%; padding: 15px; background: transparent;
+            border: 2px solid var(--mui-blue); color: var(--mui-blue);
+            font-family: 'Bangers'; font-size: 1.8rem; cursor: pointer; transition: 0.3s;
+            text-transform: uppercase; border-radius: 8px;
         }
 
-        .mastered-btn:hover { background: white; color: black; box-shadow: 0 0 40px white; }
+        .mastered-btn:hover { background: var(--mui-blue); color: black; box-shadow: 0 0 30px var(--mui-blue); }
 
         .shaking { animation: shake 0.1s infinite; }
         @keyframes shake { 0% {transform: translate(2px, 2px);} 100% {transform: translate(-2px, -2px);} }
@@ -75,19 +79,23 @@
 
     <div id="loginCard">
         <h1>PRIME SOCIALS</h1>
+        <p style="font-size: 0.8rem; letter-spacing: 2px;">PREMIUM SMM PANEL</p>
         <form onsubmit="event.preventDefault(); triggerMastery();">
-            <input type="email" placeholder="EMAIL ADDRESS" required>
+            <input type="email" placeholder="ENTER EMAIL ADDRESS" required>
             <button type="submit" class="mastered-btn" style="margin-top:20px;">ACCESS STORE</button>
         </form>
     </div>
 
     <div id="storePage">
-        <p style="color:#00ff88; font-size: 0.8rem; margin-bottom: 10px;">EASYPAISA: 03158122426</p>
+        <h2 style="font-family: 'Bangers'; font-size: 2rem; color: #00ff88; margin-bottom: 5px;">STORE OPEN</h2>
+        <p style="color:#00ff88; font-size: 0.85rem; margin-bottom: 20px; border: 1px solid #00ff88; padding: 5px; display: inline-block;">
+            EASYPAISA: 03158122426
+        </p>
         
         <div class="form-group">
-            <label>1. Select Category</label>
+            <label>1. Select Platform</label>
             <select id="platform" onchange="updateServices()">
-                <option value="tiktok_acc">TIKTOK ACCOUNTS (600 RS)</option>
+                <option value="tiktok_acc">TIKTOK ACCOUNTS</option>
                 <option value="tiktok">TIKTOK SERVICES</option>
                 <option value="instagram">INSTAGRAM SERVICES</option>
                 <option value="youtube">YOUTUBE SERVICES</option>
@@ -100,8 +108,8 @@
         </div>
 
         <div id="countrySection" class="form-group" style="display:none;">
-            <label>3. Type Country Name</label>
-            <input type="text" id="countryName" placeholder="e.g. Canada, Germany, Brazil...">
+            <label>3. Target Country</label>
+            <input type="text" id="countryName" placeholder="e.g. UK, USA, Germany">
         </div>
 
         <div id="qtySection" class="form-group">
@@ -110,20 +118,20 @@
         </div>
 
         <div class="price-box">
-            <small style="color:#00ff88; display:block;">PAYABLE AMOUNT</small>
-            <span id="totalPrice">600</span> <small style="display:inline; font-size: 1.2rem;">RS</small>
+            <small style="color:#00ff88; display:block; letter-spacing: 2px;">TOTAL PAYABLE</small>
+            <span id="totalPrice">600</span> <small style="display:inline; font-size: 1.2rem; color: #00ff88;">RS</small>
         </div>
 
         <div class="form-group">
-            <label id="linkLabel">Target Link / Your Name</label>
-            <input type="text" id="link" placeholder="Enter link or name...">
+            <label id="linkLabel">Target Link / Profile Name</label>
+            <input type="text" id="link" placeholder="Paste link here...">
         </div>
 
-        <button class="mastered-btn" onclick="sendToWhatsApp()">ORDER NOW</button>
+        <button class="mastered-btn" onclick="sendToWhatsApp()">ORDER VIA WHATSAPP</button>
     </div>
 
     <script>
-        // Updated Pricing Logic: Instagram Views set to 0.07 (70 RS per 1k)
+        // Pricing Logic
         const pricing = {
             tiktok_acc: { "TikTok UK Account": 600, "TikTok Global Account": 600 },
             tiktok: { "Followers": 1.2, "Likes": 0.07, "Views": 0.058 },
@@ -150,11 +158,7 @@
             const qtySec = document.getElementById('qtySection');
             const qtyInput = document.getElementById('qty');
 
-            if (s === "TikTok Global Account") {
-                countrySec.style.display = "block";
-            } else {
-                countrySec.style.display = "none";
-            }
+            countrySec.style.display = (s === "TikTok Global Account") ? "block" : "none";
 
             if(p === 'tiktok_acc') {
                 qtyInput.value = 1;
@@ -191,17 +195,29 @@
 
         function sendToWhatsApp() {
             const phone = "923158122426";
-            const s = document.getElementById('service').value;
-            const q = document.getElementById('qty').value;
-            const t = document.getElementById('totalPrice').innerText;
-            const l = document.getElementById('link').value;
-            const c = document.getElementById('countryName').value;
+            const platform = document.getElementById('platform').selectedOptions[0].text;
+            const service = document.getElementById('service').value;
+            const qty = document.getElementById('qty').value;
+            const price = document.getElementById('totalPrice').innerText;
+            const link = document.getElementById('link').value;
+            const country = document.getElementById('countryName').value;
 
-            if(!l) { alert("Please enter your name or link!"); return; }
+            if(!link) { alert("Please enter your link or name!"); return; }
 
-            let msg = `*NEW PRIME ORDER*%0A------------------%0A*Service:* ${s}`;
-            if(s === "TikTok Global Account") msg += `%0A*Requested Country:* ${c}`;
-            msg += `%0A*Qty/Count:* ${q}%0A*Total:* ${t} RS%0A*Target:* ${l}%0A------------------%0A_Payment via Easypaisa_`;
+            // WhatsApp Message Formatting
+            let msg = `*🔥 NEW ORDER - PRIME SOCIALS 🔥*%0A`;
+            msg += `--------------------------------%0A`;
+            msg += `*📱 Platform:* ${platform}%0A`;
+            msg += `*🛠 Service:* ${service}%0A`;
+            if(service === "TikTok Global Account" && country) {
+                msg += `*🌍 Country:* ${country}%0A`;
+            }
+            msg += `*🔢 Quantity:* ${qty}%0A`;
+            msg += `*💰 Price:* ${price} RS%0A`;
+            msg += `*🔗 Link:* ${link}%0A`;
+            msg += `--------------------------------%0A`;
+            msg += `*💳 Payment:* Easypaisa Only%0A`;
+            msg += `_Please send screenshot after payment._`;
             
             window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
         }
